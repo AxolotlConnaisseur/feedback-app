@@ -1,0 +1,49 @@
+.body {
+    background-color: #100706;
+    color: #f1678a;
+    height: 100vh;
+    width: 100%;
+}
+
+.wrapper {
+    height: 100vh;
+    width: 100%;
+    background-color: #212241;
+}
+
+.feedback-question {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px;
+
+    color: black;
+    font-weight: bold;
+    height: 10rem !important;
+    width: auto;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+table {
+    display: grid;
+    align-items: center;
+
+}
+thead{
+    justify-content: center;
+}
+
+.option {
+    color: black;
+}
+
+.option:hover {
+    background-color: #f1678a !important;
+}
+
+.option:focus {
+    background-color: #f1678a;
+    color: white;
+
+}
