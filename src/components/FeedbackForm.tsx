@@ -44,7 +44,7 @@ export function FeedbackForm(props) {
                 <button
                   className="btn send"
                   onClick={() => {
-                    // setRating()
+                    setRating(3);
                   }}
                 >
                   <input
@@ -90,7 +90,6 @@ export function FeedbackForm(props) {
     setRatingTotal(count);
   }
   const addItem = () => {
-    setRating(2);
     setItems(
       items.concat(
         <FeedbackItem
