@@ -1,0 +1,19 @@
+{
+  "FeedbackList": [
+    {
+      "id": 1,
+      "rating": 10,
+      "comment": "Hammer! Bitte weiter so!"
+    },
+    {
+      "id": 2,
+      "rating": 8,
+      "comment": "Ich habe hauptsächlich Positive Erfahrungen gemacht"
+    },
+    {
+      "commnt": "Insgesamt OK!",
+      "rating": 6,
+      "id": 4
+    }
+  ]
+}

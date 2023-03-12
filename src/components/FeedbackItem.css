@@ -1,0 +1,43 @@
+.itemWrapper {
+  width: 100%;
+  display: flex;
+  /* align-items: center;
+  align-self: center; */
+  z-index: 10;
+  padding: 5px;
+}
+.itemWrapper label {
+  /* display: flex;
+  align-self: center; */
+  color: black;
+}
+.rating {
+  position: relative;
+  top: -1rem;
+  display: flex;
+  /* align-self: flex-start; */
+  justify-content: center;
+  background-color: #f1678a;
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+}
+.rating label {
+  color: white;
+}
+
+span {
+  display: flex;
+  justify-content: space-between;
+}
+.delete {
+  color: red;
+}
+button {
+  background-color: white;
+  border: none;
+}
+.deleteBtn {
+  position: relative;
+  top: -1rem;
+}
