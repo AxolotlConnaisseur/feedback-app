@@ -3,14 +3,14 @@ import DataItem from "./FeedbackData";
 import "./FeedbackItem.css";
 
 function FeedbackItem(props: any) {
-  const isDeleted = React.useState(false);
-  let isDeletedValue = isDeleted[0];
-  let setIsDeletedValue = isDeleted[1];
-  var hidden = { display: "none" };
+  // const isDeleted = React.useState(false);
+  // let isDeletedValue = isDeleted[0];
+  // let setIsDeletedValue = isDeleted[1];
+  // var hidden = { display: "none" };
   return (
     <tr>
       <td>
-        <div className="card itemWrapper" style={isDeletedValue ? hidden : {}}>
+        <div className="card itemWrapper" >
           <span>
             <div className="rating">
               <label htmlFor="rating">{props.rating}</label>
@@ -18,9 +18,7 @@ function FeedbackItem(props: any) {
             <div>
               <button
                 className="deleteBtn"
-                onClick={() => {
-                  setIsDeletedValue(true);
-                }}
+                onClick={()=>{props.deleteItemHandler(props.id)}}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

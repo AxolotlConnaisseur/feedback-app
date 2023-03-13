@@ -14,7 +14,7 @@ import { render } from "@testing-library/react";
 var comment: any = "";
 var rating: any = "9";
 class Form {
-  fillItems() {}
+  fillItems() { }
 }
 function getInput() {
   rating = 4;
@@ -63,14 +63,20 @@ export function FeedbackForm(props) {
       </ul>
     );
   }
-  var [items, setItems] = useState<any[]>([
-    <FeedbackItem rating={5} comment={"lol"} key={0}></FeedbackItem>,
-  ]);
+
+  var [items, setItems] = useState(itemsEx);
   var [rating, setRating] = useState<any>(4);
   var [comment, setComment] = useState<any>("");
   var [ratingCount, setRatingCount] = useState<any>(0);
   var [ratingAvg, setRatingAvg] = useState<any>(0);
   var [ratingTotal, setRatingTotal] = useState<any>(0);
+
+  function deleteItem(id) {
+    setItems(items.filter(function (item) {
+      return item.id !== id;
+    }))
+  }
+
 
   function handleComment(event) {
     setComment(event.target.value);
@@ -89,22 +95,29 @@ export function FeedbackForm(props) {
     });
     setRatingTotal(count);
   }
-  const addItem = () => {
-    setItems(
-      items.concat(
-        <FeedbackItem
-          rating={6}
-          comment={"lol"}
-          key={items.length + 1}
-        ></FeedbackItem>
-      )
-    );
-    items.forEach(function (item) {
-      console.log(item);
-    });
-    var demo = document.getElementById("feedbackList");
-    console.log("\n\n");
-    // ReactDOM.render(<FeedbackListe></FeedbackListe>, demo);
+  const addItem = (rating, comment) => {
+    const newItem = {
+      id: items.length,
+      rating: rating,
+      comment: comment
+    }
+    setItems([...items, newItem]);
+
+    // setItems(
+    //   items.concat(
+    //     <FeedbackItem
+    //       rating={6}
+    //       comment={"lol"}
+    //       key={items.length + 1}
+    //     ></FeedbackItem>
+    //   )
+    // );
+    // items.forEach(function (item) {
+    //   console.log(item);
+    // });
+    // var demo = document.getElementById("feedbackList");
+    // console.log("\n\n");
+    // // ReactDOM.render(<FeedbackListe></FeedbackListe>, demo);
   };
   const FeedbackListe = () => {
     return (
@@ -115,9 +128,11 @@ export function FeedbackForm(props) {
               <div>
                 <FeedbackItem
                   key={index}
-                  rating={rating}
-                  comment={comment}
-                ></FeedbackItem>
+                  id={item.id}
+                  rating={item.rating}
+                  comment={item.comment}
+                  deleteItemHandler={deleteItem}
+                />
               </div>
             );
           })}
@@ -151,7 +166,7 @@ export function FeedbackForm(props) {
                       <button
                         className="btn send-btn"
                         onClick={() => {
-                          addItem();
+                          addItem(rating, comment);
                           calculateAvg();
                           getRatingCount();
                           getRatingTotal();
