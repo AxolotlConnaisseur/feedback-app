@@ -1,12 +1,7 @@
 import React from "react";
-import DataItem from "./FeedbackData";
-import "./FeedbackItem.css";
+import "./style/FeedbackItem.css";
 
 function FeedbackItem(props: any) {
-  // const isDeleted = React.useState(false);
-  // let isDeletedValue = isDeleted[0];
-  // let setIsDeletedValue = isDeleted[1];
-  // var hidden = { display: "none" };
   return (
     <tr>
       <td>

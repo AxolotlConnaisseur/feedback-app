@@ -1,13 +1,13 @@
 .body {
   background-color: #100706;
   color: #f1678a;
-  height: 100vh;
-  width: 100%;
+  min-height: 100%;
+
 }
 
 .wrapper {
-  height: 100vh;
-  width: 100%;
+  min-height: 100%;
+  height: fit-content;
   background-color: #212241;
 }
 
@@ -20,13 +20,12 @@
   color: black;
   font-weight: bold;
   height: 10rem !important;
-  width: 100%;
   background-color: whitesmoke;
   border-radius: 5px;
 }
 
 table {
-    table-layout: fixed;
+  table-layout: fixed;
   width: 100%;
   display: grid;
   align-items: center;
@@ -66,19 +65,14 @@ tbody tr {
 .secondRow td {
   width: 100%;
 }
-.firstRow {
-  display: flex;
-  justify-content: center;
+.firstRow td {
   width: 100%;
 }
-.firstRow td{
-    width: 100%;
-}
-.review{
-    width: 60% !important;
+.review {
+  width: 60% !important;
 }
 
-tbody td{
+tbody td {
   width: 70%;
   margin-bottom: 20px;
   margin-top: 10px;
@@ -102,11 +96,9 @@ ul {
   background-color: #f1678a !important;
 }
 
-.btn:focus {
-    background-color: #f1678a !important;
-  }
-.btn:active{
+.btn.choice:focus {
   background-color: #f1678a !important;
-
 }
-  
+.btn.choice:active {
+  background-color: #f1678a !important;
+}

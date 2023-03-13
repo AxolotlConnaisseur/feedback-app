@@ -1,21 +1,5 @@
 import React from "react";
-import "./FeedbackStats.css";
-
-var RatingCount: string = "4";
-var RatingAvg: string = "4";
-
-class Stat {
-  count: number = 0;
-  avg: number = 0;
-
-  constructor(count: number, avg: number) {
-    this.count = count;
-    this.avg = avg;
-    RatingCount = RatingCount + 1;
-    RatingAvg = RatingAvg + 1;
-  }
-  stat: Stat = new Stat(0, 0);
-}
+import "./style/FeedbackStats.css";
 
 function FeedbackStats(props: any) {
   return (

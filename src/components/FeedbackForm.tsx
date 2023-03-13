@@ -1,62 +1,54 @@
-import React, { use, useState } from "react";
-import logo from "./logo.svg";
+import React, {useState } from "react";
 import ReactDOM from "react-dom";
-import "./FeedbackForm.css";
+import "./style/FeedbackForm.css";
 import FeedbackItem from "./FeedbackItem";
 import FeedbackStats from "./FeedbackStats";
-import DataItem from "./FeedbackData";
-import FeedbackList from "./FeedbackList";
-// import Buttons from "./Buttons";
 import buttons from "./Button";
 import itemsEx from "./items";
-import { render } from "@testing-library/react";
-
-var comment: any = "";
-var rating: any = "9";
-class Form {
-  fillItems() { }
-}
-function getInput() {
-  rating = 4;
-}
-const feedbackItem = () => {
-  return FeedbackItem;
-};
 
 export function FeedbackForm(props) {
-  // var ratingCount: number = 1;
-  // var ratingAvg: number = 0;
-  // var ratingTotal: number = 10;
-  // function deleteItem(id: any) {
-  //   setItems((prev) => {
-  //     return prev.filter((item, index) => {
-  //       return index !== id;
-  //     });
-  //   });
-  // }
+  var [items, setItems] = useState(itemsEx);
+  var getInitialTotal = () => {
+    let count: number = 0;
+    items.forEach(function (item) {
+      count = count + item.rating;
+    });
+    return count;
+  };
+  var initialTotal: number = getInitialTotal();
+
+  var getInitialAvg = () => {
+    var result: number = Math.round((initialTotal / items.length) * 10) / 10;
+    return result;
+  };
+  var initialAvg: number = getInitialAvg();
+  var [rating, setRating] = useState<any>(1);
+  var [comment, setComment] = useState<any>("(Keine Angabe)");
+  var [ratingCount, setRatingCount] = useState<any>(items.length);
+  var [ratingTotal, setRatingTotal] = useState<any>(0);
+  var [ratingAvg, setRatingAvg] = useState<any>(initialAvg);
+
   function Buttons() {
     return (
       <ul className="btn-group">
-        {buttons.map(function (button) {
+        {buttons.map(function (button, index) {
           return (
-            <li>
-              <div>
-                <button
-                  className="btn send"
-                  onClick={() => {
-                    setRating(3);
-                  }}
-                >
-                  <input
-                    className="btn-check"
-                    type="radio"
-                    name="flexRadioDefault"
-                  ></input>
-                  <label className="form-check-label" htmlFor="btn-check">
-                    {button}
-                  </label>
-                </button>
-              </div>
+            <li key={index}>
+              <button
+                className="btn choice"
+                onClick={() => {
+                  setRating(button.valueOf());
+                }}
+              >
+                <input
+                  className="btn-check"
+                  type="button"
+                  name="flexRadioDefault"
+                ></input>
+                <label className="form-check-label" htmlFor="btn-check">
+                  {button}
+                </label>
+              </button>
             </li>
           );
         })}
@@ -64,34 +56,30 @@ export function FeedbackForm(props) {
     );
   }
 
-  var [items, setItems] = useState(itemsEx);
-  var [rating, setRating] = useState<any>(4);
-  var [comment, setComment] = useState<any>("");
-  var [ratingCount, setRatingCount] = useState<any>(0);
-  var [ratingAvg, setRatingAvg] = useState<any>(0);
-  var [ratingTotal, setRatingTotal] = useState<any>(0);
-
   function deleteItem(id) {
-    setItems(items.filter(function (item) {
-      return item.id !== id;
-    }))
+    setItems(
+      items.filter(function (item) {
+        return item.id !== id;
+      })
+    );
+    setRatingCount(ratingCount - 1);
+    getRatingTotal();
+    calculateAvg();
   }
-
 
   function handleComment(event) {
     setComment(event.target.value);
-    // setComment("Hullu");
   }
   function getRatingCount() {
     setRatingCount(items.length + 1);
   }
   function calculateAvg() {
-    setRatingAvg(ratingTotal / ratingCount);
+    setRatingAvg(Math.round((ratingTotal / ratingCount) * 10) / 10);
   }
   function getRatingTotal() {
     let count = 0;
     items.forEach(function (item) {
-      count += item.rating;
+      count = count + item.rating;
     });
     setRatingTotal(count);
   }
@@ -99,45 +87,25 @@ export function FeedbackForm(props) {
     const newItem = {
       id: items.length,
       rating: rating,
-      comment: comment
-    }
+      comment: comment,
+    };
     setItems([...items, newItem]);
-
-    // setItems(
-    //   items.concat(
-    //     <FeedbackItem
-    //       rating={6}
-    //       comment={"lol"}
-    //       key={items.length + 1}
-    //     ></FeedbackItem>
-    //   )
-    // );
-    // items.forEach(function (item) {
-    //   console.log(item);
-    // });
-    // var demo = document.getElementById("feedbackList");
-    // console.log("\n\n");
-    // // ReactDOM.render(<FeedbackListe></FeedbackListe>, demo);
   };
   const FeedbackListe = () => {
     return (
-      <tr className="feedbackList">
-        <td>
-          {items.map(function (item, index) {
-            return (
-              <div>
-                <FeedbackItem
-                  key={index}
-                  id={item.id}
-                  rating={item.rating}
-                  comment={item.comment}
-                  deleteItemHandler={deleteItem}
-                />
-              </div>
-            );
-          })}
-        </td>
-      </tr>
+      <tbody className="feedbackList">
+        {items.map(function (item, index) {
+          return (
+            <FeedbackItem
+              key={index}
+              id={item.id}
+              rating={item.rating}
+              comment={item.comment}
+              deleteItemHandler={deleteItem}
+            />
+          );
+        })}
+      </tbody>
     );
   };
 
@@ -167,9 +135,14 @@ export function FeedbackForm(props) {
                         className="btn send-btn"
                         onClick={() => {
                           addItem(rating, comment);
-                          calculateAvg();
+                          setRatingAvg(
+                            Math.round(
+                              ((ratingTotal + rating) / (ratingCount + 1)) * 10
+                            ) / 10
+                          );
                           getRatingCount();
                           getRatingTotal();
+                  
                         }}
                       >
                         Send
@@ -190,11 +163,11 @@ export function FeedbackForm(props) {
               </td>
             </tr>
           </thead>
-          <tbody>
-            <FeedbackListe></FeedbackListe>
-          </tbody>
+          <FeedbackListe></FeedbackListe>
         </table>
       </div>
     </div>
   );
 }
+//Known Problems: RatingAvg spinnt beim Aktualisieren wenn zum ersten Malein neues Item erstellt wird  (Komischer 0,. Wert)
+//Wenn ein neues Item hinzugefügt wird und die InitialItems durch Eingabe entfernt werden, wird auch das letzte (neue) Item entfernt, aber in den Stats immer noch gelistet
