@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./style/FeedbackForm.css";
 import FeedbackItem from "./FeedbackItem";
@@ -24,10 +24,10 @@ export function FeedbackForm(props) {
   var initialAvg: number = getInitialAvg();
   var [rating, setRating] = useState<any>(1);
   var [comment, setComment] = useState<any>("(Keine Angabe)");
-  var [ratingCount, setRatingCount] = useState<any>(items.length);
-  var [ratingTotal, setRatingTotal] = useState<any>(0);
-  var [ratingAvg, setRatingAvg] = useState<any>(initialAvg);
-
+  var [ratingCount, setRatingCount] = useState<number>(items.length);
+  var [ratingTotal, setRatingTotal] = useState<number>(0);
+  var [ratingAvg, setRatingAvg] = useState<number>(initialAvg);
+  ratingCount = items.length+1;
   function Buttons() {
     return (
       <ul className="btn-group">
@@ -134,6 +134,7 @@ export function FeedbackForm(props) {
                       <button
                         className="btn send-btn"
                         onClick={() => {
+                          // getRatingTotal();
                           addItem(rating, comment);
                           setRatingAvg(
                             Math.round(
@@ -141,8 +142,6 @@ export function FeedbackForm(props) {
                             ) / 10
                           );
                           getRatingCount();
-                          getRatingTotal();
-                  
                         }}
                       >
                         Send
@@ -169,5 +168,5 @@ export function FeedbackForm(props) {
     </div>
   );
 }
-//Known Problems: RatingAvg spinnt beim Aktualisieren wenn zum ersten Malein neues Item erstellt wird  (Komischer 0,. Wert)
+//Known Problems: RatingAvg spinnt beim Aktualisieren wenn zum ersten Mal ein neues Item erstellt wird  (Komischer 0,. Wert)
 //Wenn ein neues Item hinzugefügt wird und die InitialItems durch Eingabe entfernt werden, wird auch das letzte (neue) Item entfernt, aber in den Stats immer noch gelistet
